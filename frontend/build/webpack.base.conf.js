@@ -49,6 +49,7 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
+        // exclude: /node_modules(\/|\\)(?!(@feathersjs))/
         include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
       },
       {
@@ -87,6 +88,7 @@ module.exports = {
     fs: 'empty',
     net: 'empty',
     tls: 'empty',
+    uws: 'empty',
     child_process: 'empty'
   }
 }

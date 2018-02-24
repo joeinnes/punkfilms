@@ -1,12 +1,13 @@
 <template>
-  <div class='mx-4 mx-md-3 mx-lg-2 mx-xl-1'>
-    <div class='mt-3 card-columns'>
-      <FilmCard v-for='film in films'
-                :key='film.id'
-                :film='film'
-                :liked="checkStatus('liked', film.id)"
-                :disliked="checkStatus('disliked', film.id)"
-                :seen="checkStatus('seen', film.id)"
+  <div class="mx-4 mx-md-3 mx-lg-2 mx-xl-1">
+    <div class="mt-3 card-columns">
+      <FilmCard 
+        v-for="film in films"
+        :key="film.id"
+        :film="film"
+        :liked="checkStatus('liked', film.id)"
+        :disliked="checkStatus('disliked', film.id)"
+        :seen="checkStatus('seen', film.id)"
       />
     </div>
   </div>
@@ -31,6 +32,11 @@ export default {
       likesId: ''
     }
   },
+  computed: {
+    ...mapGetters({
+      loggedInUser: 'getUsername',
+    })
+  },
   created () {
     axios
       .get(`${this.$config.API}/film`, {
@@ -45,11 +51,6 @@ export default {
         this.films = response.data.data
       })
       .catch(err => console.error(err))
-  },
-  computed: {
-    ...mapGetters({
-      loggedInUser: 'getUsername',
-    })
   },
   methods: {
     checkStatus: function (state, filmId) {

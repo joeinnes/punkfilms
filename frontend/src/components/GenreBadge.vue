@@ -5,6 +5,11 @@
 <script>
 export default {
   name: 'GenreBadge',
-  props: ['genre']
+  props: {
+    genre: { 
+      type: Object,
+      default: () => ''
+    }
+  }
 }
 </script>
