@@ -1,11 +1,12 @@
-const { authenticate } = require('@feathersjs/authentication').hooks;
+const { authenticate } = require('@feathersjs/authentication').hooks
+const addUserIdToLike = require('../../hooks/addUserIdToLike')
 
 module.exports = {
   before: {
     all: [ authenticate('jwt') ],
     find: [],
     get: [],
-    create: [],
+    create: [addUserIdToLike()],
     update: [],
     patch: [],
     remove: []
@@ -15,7 +16,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [],
+    create: [addUserIdToLike()],
     update: [],
     patch: [],
     remove: []

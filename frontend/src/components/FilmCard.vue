@@ -28,7 +28,7 @@
       </p>
     </div>
     <div class="card-footer d-flex justify-content-between">
-      <span :class="[liked ? 'liked' : '']"><thumbs-up-icon /></span> <thumbs-down-icon :class="[disliked ? 'disliked' : '']"/> <eye-icon :class="[seen ? 'seen' : '']"/>
+      <span :class="[liked ? 'liked' : '']"><thumbs-up-icon @click="like" /></span> <thumbs-down-icon :class="[disliked ? 'disliked' : '']"/> <eye-icon :class="[seen ? 'seen' : '']"/>
     </div>
   </div>
 </template>
@@ -69,6 +69,18 @@ export default {
     seen: {
       type: Boolean,
       default: () => false
+    }
+  },
+  methods: {
+    like: async function () {
+      try { 
+        await this.$feathers.service('like').create({
+          filmId: this.film.id,
+          reaction: 'like'
+        })
+      } catch (err) {
+        console.error(err)
+      }
     }
   },
   computed: {

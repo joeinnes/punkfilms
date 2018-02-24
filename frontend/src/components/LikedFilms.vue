@@ -6,8 +6,7 @@
         v-for="film in likedFilms"  
         :key="film.id">{{ film.Title }} <delete-icon
           :id="film.id"
-          style="height: 1em" 
-          @click="unlike" /></li>
+          style="height: 1em" /></li>
     </ul>
     <h2>Disliked Films</h2>
     <ul class="mt-3">
@@ -15,8 +14,7 @@
         v-for="film in dislikedFilms" 
         :key="film.id">{{ film.Title }} <delete-icon 
           :id="film.id"
-          style="height: 1em"
-          @click="undislike" /></li>
+          style="height: 1em" /></li>
     </ul>
     <h2>Seen Films</h2>
     <ul class="mt-3">
@@ -24,14 +22,12 @@
         v-for="film in seenFilms" 
         :key="film.id">{{ film.Title }} <delete-icon 
           :id="film.id"
-          style="height: 1em"
-          @click="unsee" /></li>
+          style="height: 1em" /></li>
     </ul>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import { DeleteIcon } from 'vue-feather-icons'
 
 export default {
@@ -46,12 +42,10 @@ export default {
       likesId: ''
     }
   },
-  computed: {
-    ...mapGetters({
-      loggedInUser: 'getUsername'
+  created: async function () {
+    this.likedFilms = await this.$feathers.service('like').find({
     })
-  },
-  created () {
+    console.log(this.likedFilms.data)
   },
   methods: {
   }

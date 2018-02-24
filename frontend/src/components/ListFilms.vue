@@ -5,18 +5,13 @@
         v-for="film in films"
         :key="film.id"
         :film="film"
-        :liked="checkStatus('liked', film.id)"
-        :disliked="checkStatus('disliked', film.id)"
-        :seen="checkStatus('seen', film.id)"
       />
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
 import FilmCard from './FilmCard.vue'
-import { mapGetters } from 'vuex'
 
 export default {
   name: 'ListFilms',
@@ -25,41 +20,15 @@ export default {
   },
   data () {
     return {
-      films: [],
-      likedFilms: [],
-      dislikedFilms: [],
-      seenFilms: [],
-      likesId: ''
+      films: []
     }
   },
-  computed: {
-    ...mapGetters({
-      loggedInUser: 'getUsername',
-    })
-  },
-  created () {
-    axios
-      .get(`${this.$config.API}/film`, {
-        headers: {
-          Authorization: `Bearer ${this.$store.state.token}`
-        }
-      })
-      .then(response => {
-        if (!response.data) {
-          throw response
-        }
-        this.films = response.data.data
-      })
-      .catch(err => console.error(err))
-  },
-  methods: {
-    checkStatus: function (state, filmId) {
-      return (
-        this[state + 'Films'].findIndex(el => {
-          console.log(`Looking for ${filmId}, found ${el.id}`)
-          return el.id === filmId
-        }) > -1
-      )
+  created: async function () {
+    try {
+      const films = await this.$feathers.service('film').find()
+      this.films = films.data
+    } catch (err) {
+      console.error(err)
     }
   }
 }

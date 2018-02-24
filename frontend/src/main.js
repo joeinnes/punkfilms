@@ -5,7 +5,7 @@ import vueConfig from 'vue-config'
 import vueFeathers from 'vue-feathers'
 
 import store from '@/store/store'
-import router from './router'
+import router from './router/index'
 import config from './config'
 import feathers from './feathers'
 

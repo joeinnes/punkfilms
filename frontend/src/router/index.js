@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import store from '@/store/store'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import ListFilms from '@/components/ListFilms'
@@ -17,34 +16,15 @@ export default new Router({
     }, {
       path: '/films',
       name: 'Film List',
-      component: ListFilms,
-      beforeEnter: isLoggedIn
+      component: ListFilms
     }, {
       path: '/liked-films',
       name: 'Liked Films',
-      component: LikedFilms,
-      beforeEnter: isLoggedIn
+      component: LikedFilms
     }, {
       path: '/register',
       name: 'Register',
-      component: Register,
-      beforeEnter: isNotLoggedIn
+      component: Register
     }
   ]
 })
-
-function isLoggedIn (to, from, next) {
-  if (!store.getters.getUsername) {
-    next(false)
-  } else {
-    next()
-  }
-}
-
-function isNotLoggedIn (to, from, next) {
-  if (store.getters.getUsername) {
-    next(false)
-  } else {
-    next()
-  }
-}

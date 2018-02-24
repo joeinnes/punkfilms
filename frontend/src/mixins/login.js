@@ -1,4 +1,3 @@
-import router from '../router/index'
 import decode from 'jwt-decode'
 
 export default {
@@ -10,7 +9,7 @@ export default {
           const userId = decode(authResponse.accessToken).userId
           const user = await this.$feathers.service('users').get(userId)
           this.user = user
-          router.push('/films')
+          this.$router.push('/films')
         } else {
           const payload = Object.assign({ strategy: 'local' }, credentials)
           const authResponse = await this.$feathers
@@ -18,8 +17,9 @@ export default {
           const userId = decode(authResponse.accessToken).userId
           const user = await this.$feathers.service('users').get(userId)
           this.user = user
-          router.push('/films')
+          this.$router.push('/films')
         }
+        console.log(this.$feathers)
       } catch (e) {
         console.error(e)
       }

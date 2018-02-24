@@ -43,6 +43,7 @@
 <script>
 import { UserIcon } from 'vue-feather-icons'
 import login from '../mixins/login'
+import logout from '../mixins/logout'
 
 export default {
   name: 'LogIn',
@@ -50,7 +51,8 @@ export default {
     UserIcon
   },
   mixins: [
-    login
+    login,
+    logout
   ],
   data () {
     return {
