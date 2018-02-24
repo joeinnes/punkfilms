@@ -1,0 +1,34 @@
+{
+  "host": "localhost",
+  "port": 3030,
+  "public": "../public/",
+  "paginate": {
+    "default": 10,
+    "max": 50
+  },
+  "sqlite": "sqlite://punkfilms_backend.sqlite",
+  "authentication": {
+    "secret": "cbdc80d72c9aa8e6259b002cc471a2eeb242e6b1ca469b19a8453fe1fc21b49efa317424d217efc9e0fb46b186a70e5ac82ce906ef7ef39e076e00bfb10929058273a8c27716825181ab006c38bc954ab0ecfeeaed43a1d59f6b8fb7daad98bfbc078f6f4a84c4c86b9ef99f66a4a8989c81307ed471cb125e73074738b8e248616355c898d795189fd9c3166c308bf6e5712ca715fc7b093d6d2f7834931c5fc1099d68184363f4ecfb7472b6dcab46a8d3a32ad0e219c0e171bea23d4640dedbc3abbb3c661cf8c3c4bef095999fe6cff74d11cf45d6d719e0adffb61bc9fcf6493cb6f84b3f03b66fdd97e60c2c5ccf52a86b0ebfd28801451a08775d2b3b",
+    "strategies": [
+      "jwt",
+      "local"
+    ],
+    "path": "/authentication",
+    "service": "users",
+    "jwt": {
+      "header": {
+        "typ": "access"
+      },
+      "audience": "https://yourdomain.com",
+      "subject": "anonymous",
+      "issuer": "feathers",
+      "algorithm": "HS256",
+      "expiresIn": "1d"
+    },
+    "local": {
+      "entity": "user",
+      "usernameField": "email",
+      "passwordField": "password"
+    }
+  }
+}

@@ -1,0 +1,79 @@
+<template>
+  <div class="card">
+    <img class="card-img-top img-fluid" :src="film.image" :alt="film.title">
+    <div class="card-body">
+      <h5 class="card-title mb-0 pb-0">{{ film.title }}</h5>
+      <p class="card-text">
+        <GenreBadge v-for="genre in film.genres" :genre="genre" :key="genre.id"/>
+      </p>
+      <p class="card-text rating mb-1 d-flex justify-content-between">
+        <span><star-icon style="height: 1em" /> {{ film.rating }}/10</span> <span>{{readableDate}}</span>
+      </p>
+      <p class="card-text">
+        {{ film.overview }}
+      </p>
+      <p class="card-text d-flex justify-content-between">
+        <a :href="tmdbLink" target="_blank">Read more</a>
+        <a :href="youtubeSearch" target="_blank"><video-icon /></a>
+      </p>
+    </div>
+    <div class="card-footer d-flex justify-content-between">
+      <span :class="[liked ? 'liked' : '']"><thumbs-up-icon /></span> <thumbs-down-icon :class="[disliked ? 'disliked' : '']"/> <eye-icon :class="[seen ? 'seen' : '']"/>
+    </div>
+  </div>
+</template>
+
+<script>
+import GenreBadge from "./GenreBadge.vue";
+import {
+  StarIcon,
+  ThumbsUpIcon,
+  ThumbsDownIcon,
+  EyeIcon,
+  VideoIcon
+} from "vue-feather-icons";
+
+export default {
+  name: "FilmCard",
+  props: ["film", "liked", "disliked", "seen"],
+  computed: {
+    tmdbLink() {
+      return `https://www.themoviedb.org/movie/${this.film.tmdb_id}`;
+    },
+    youtubeSearch() {
+      return `https://youtube.com/results?search_query=${
+        this.film.title
+      }%20trailer`;
+    },
+    readableDate() {
+      // Stupid Americans
+      const date = new Date (this.film.release_date)
+      if (this.$config.format === "mm/dd/yyyy") {
+        return `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
+      }
+      return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
+    }
+  },
+  components: {
+    GenreBadge,
+    StarIcon,
+    ThumbsUpIcon,
+    ThumbsDownIcon,
+    EyeIcon,
+    VideoIcon
+  }
+};
+</script>
+
+<!-- Add 'scoped' attribute to limit CSS to this component only -->
+<style scoped>
+.liked {
+  color: red;
+}
+.disliked {
+  color: red;
+}
+.seen {
+  color: red;
+}
+</style>
